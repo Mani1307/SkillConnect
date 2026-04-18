@@ -49,8 +49,44 @@ services:
         value: ${REACT_APP_API_URL}
     routes:
       - type: rewrite
-        source: /(.*)/(.*)
-        destination: https://skillconnect-backend.onrender.com/$1/$2
+        source: /api/(.*)
+        destination: https://skillconnect-backend.onrender.com/api/$1
+      - type: rewrite
+        source: /auth/(.*)
+        destination: https://skillconnect-backend.onrender.com/auth/$1
+      - type: rewrite
+        source: /admin/(.*)
+        destination: https://skillconnect-backend.onrender.com/admin/$1
+      - type: rewrite
+        source: /workers/(.*)
+        destination: https://skillconnect-backend.onrender.com/workers/$1
+      - type: rewrite
+        source: /employers/(.*)
+        destination: https://skillconnect-backend.onrender.com/employers/$1
+      - type: rewrite
+        source: /jobs/(.*)
+        destination: https://skillconnect-backend.onrender.com/jobs/$1
+      - type: rewrite
+        source: /ratings/(.*)
+        destination: https://skillconnect-backend.onrender.com/ratings/$1
+      - type: rewrite
+        source: /work-history/(.*)
+        destination: https://skillconnect-backend.onrender.com/work-history/$1
+      - type: rewrite
+        source: /location/(.*)
+        destination: https://skillconnect-backend.onrender.com/location/$1
+      - type: rewrite
+        source: /payments/(.*)
+        destination: https://skillconnect-backend.onrender.com/payments/$1
+      - type: rewrite
+        source: /ai/(.*)
+        destination: https://skillconnect-backend.onrender.com/ai/$1
+      - type: rewrite
+        source: /chat/(.*)
+        destination: https://skillconnect-backend.onrender.com/chat/$1
+      - type: rewrite
+        source: /ml/(.*)
+        destination: https://skillconnect-backend.onrender.com/ml/$1
       - type: rewrite
         source: /*
         destination: /index.html
