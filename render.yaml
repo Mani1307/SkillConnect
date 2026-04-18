@@ -1,0 +1,62 @@
+services:
+  # Backend API Service
+  - type: web
+    name: skillconnect-backend
+    env: node
+    plan: free
+    buildCommand: "cd backend && npm install"
+    startCommand: "cd backend && npm start"
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: MONGODB_URI
+        value: ${MONGODB_URI}
+      - key: JWT_SECRET
+        value: ${JWT_SECRET}
+      - key: JWT_EXPIRE
+        value: 30d
+      - key: CLIENT_URL
+        value: ${CLIENT_URL}
+      - key: EMAIL_HOST
+        value: smtp.gmail.com
+      - key: EMAIL_PORT
+        value: 587
+      - key: EMAIL_USER
+        value: ${EMAIL_USER}
+      - key: EMAIL_PASS
+        value: ${EMAIL_PASS}
+      - key: EMAIL_FROM
+        value: SkillConnect <noreply@skillconnect.com>
+      - key: GEMINI_API_KEY
+        value: ${GEMINI_API_KEY}
+      - key: RAPIDAPI_KEY
+        value: ${RAPIDAPI_KEY}
+      - key: RAPIDAPI_HOST
+        value: ${RAPIDAPI_HOST}
+    healthCheckPath: /api/health
+
+  # Frontend Service
+  - type: web
+    name: skillconnect-frontend
+    env: static
+    plan: free
+    buildCommand: "cd frontend && npm install && npm run build"
+    staticPublishPath: ./frontend/build
+    envVars:
+      - key: REACT_APP_API_URL
+        value: ${REACT_APP_API_URL}
+    routes:
+      - type: rewrite
+        source: /api/*
+        destination: https://skillconnect-backend.onrender.com/api/*
+      - type: rewrite
+        source: /*
+        destination: /index.html
+
+# MongoDB Atlas (External Service)
+databases:
+  - name: skillconnect-db
+    databaseName: skillconnect
+    user: skillconnect-user
